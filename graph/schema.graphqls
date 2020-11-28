@@ -2,27 +2,42 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
+type Project {
   id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+  title: String!
+  language: String!
+  description: String!
+}
+type BlogPost {
+  id: ID!
+  title: String!
+  body: String!
 }
 
 type User {
   id: ID!
   name: String!
+  password: String!
+  email: String!
 }
 
 type Query {
-  todos: [Todo!]!
+  projects: [Project!]!
+  posts: [BlogPost!]!
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
+input NewProject {
+  title: String!
+  description: String!
+  language: String!
+}
+
+input NewBlogPost {
+  title: String!
+  body: String!
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  createProject(input: NewProject!): Project!
+  createBlogPost(input: NewBlogPost!): BlogPost!
 }

@@ -2,19 +2,33 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type BlogPost struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Body  string `json:"body"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type NewBlogPost struct {
+	Title string `json:"title"`
+	Body  string `json:"body"`
+}
+
+type NewProject struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Language    string `json:"language"`
+}
+
+type Project struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Language    string `json:"language"`
+	Description string `json:"description"`
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
 }

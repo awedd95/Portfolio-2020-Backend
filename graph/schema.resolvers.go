@@ -10,11 +10,26 @@ import (
 	"server/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+func (r *mutationResolver) CreateProject(ctx context.Context, input model.NewProject) (*model.Project, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+func (r *mutationResolver) CreateBlogPost(ctx context.Context, input model.NewBlogPost) (*model.BlogPost, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) Projects(ctx context.Context) ([]*model.Project, error) {
+	var projects []*model.Project
+	dummyProject := model.Project{
+		Title:       "test title",
+		Description: "test description",
+		Language:    "test language",
+	}
+	projects = append(projects, &dummyProject)
+	return projects, nil
+}
+
+func (r *queryResolver) Posts(ctx context.Context) ([]*model.BlogPost, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
