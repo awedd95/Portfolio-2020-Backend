@@ -40,7 +40,7 @@ func DB_Model() {
         Password: os.Getenv("PASSWORD"),
     })
     defer db.Close()
-
+    fmt.Printf("%q\n", os.Getenv("PASSWORD"))
     err := createSchema(db)
     if err != nil {
         panic(err)
