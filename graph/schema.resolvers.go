@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"server/graph/generated"
 	"server/graph/model"
-	"server/db"
 )
 
 func (r *mutationResolver) CreateProject(ctx context.Context, input model.NewProject) (*model.Project, error) {
