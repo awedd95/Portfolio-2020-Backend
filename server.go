@@ -6,7 +6,7 @@ import (
 	"os"
 	"server/graph"
 	"server/graph/generated"
-
+	"server/db"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 )
@@ -18,9 +18,8 @@ func main() {
 	if port == "" {
 		port = defaultPort
 	}
-
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
-
+    db.DB_MODEL()
 	http.Handle("/graphiql", playground.Handler("GraphQL playground", "/graphql"))
 	http.Handle("/graphql", srv)
 
