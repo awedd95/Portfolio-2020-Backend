@@ -21,7 +21,7 @@ func (r *mutationResolver) CreateBlogPost(ctx context.Context, input model.NewBl
 func (r *queryResolver) Projects(ctx context.Context) ([]*model.Project, error) {
 	var projects []*model.Project
 	dummyProject := model.Project{
-		Title:       "test title",
+		Title:       "test title 2",
 		Description: "test description",
 		Language:    "test language",
 	}
