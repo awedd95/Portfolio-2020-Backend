@@ -6,7 +6,6 @@ package graph
 import (
 	"context"
 	"fmt"
-	"server/graph/generated"
 	"server/graph/model"
 )
 
@@ -15,7 +14,15 @@ func (r *mutationResolver) CreateProject(ctx context.Context, input model.NewPro
 }
 
 func (r *mutationResolver) CreateBlogPost(ctx context.Context, input model.NewBlogPost) (*model.BlogPost, error) {
-	panic(fmt.Errorf("not implemented"))
+    blogPost := model.BlogPost{
+        Title: input.Title,
+        Body : input.Body,
+    }
+    _,err := r.DB.Model(&blogPost).Insert()
+	if err != nil {
+		return nil, err
+	}    
+    return &blogPost, nil
 }
 
 func (r *queryResolver) Projects(ctx context.Context) ([]*model.Project, error) {
@@ -33,11 +40,3 @@ func (r *queryResolver) Posts(ctx context.Context) ([]*model.BlogPost, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-// Mutation returns generated.MutationResolver implementation.
-func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
-
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
-
-type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }

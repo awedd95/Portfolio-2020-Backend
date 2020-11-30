@@ -6,9 +6,12 @@ import (
 	"os"
 	"server/graph"
 	"server/graph/generated"
-	"server/db"
+    database	"server/db"
+
+    "github.com/go-chi/chi"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+    "github.com/go-pg/pg/v10"
 )
 
 const defaultPort = "8888"
@@ -18,10 +21,34 @@ func main() {
 	if port == "" {
 		port = defaultPort
 	}
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
-    db.DB_Model()
-	http.Handle("/graphiql", playground.Handler("GraphQL playground", "/graphql"))
-	http.Handle("/graphql", srv)
+    dbpass := os.Getenv("PASSWORD")
+    db := pg.Connect(&pg.Options{
+        Addr:     ":5432",
+        User: "postgres",
+        Password: dbpass,
+        Database: "backend",
+    })
+    defer db.Close()
+    err := database.CreateSchema(db)
+	if err != nil {
+		panic(err)
+	}
+
+    r := chi.NewRouter()
+
+    r.Route("/graphql", func(r chi.Router) {
+        schema := generated.NewExecutableSchema(generated.Config{
+            Resolvers: &graph.Resolver{
+                DB: db,
+            },
+        })
+	    srv := handler.NewDefaultServer(schema)
+
+		r.Handle("/graphiql", srv)
+    })
+
+    gqlPlayground := playground.Handler("GraphQL playground", "/graphql")
+	r.Get("/graphiql", gqlPlayground)
 
 	log.Printf("connect to http://localhost:%s/graphiql for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

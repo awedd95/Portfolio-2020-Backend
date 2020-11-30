@@ -1,8 +1,7 @@
-package db
+package database
 
 import (
     "fmt"
-    "os"
     "github.com/go-pg/pg/v10"
     "github.com/go-pg/pg/v10/orm"
 )
@@ -22,34 +21,14 @@ type BlogPost struct {
     Id       int64
     Title    string
     Body    string
-    Author   *User `pg:"rel:has-one"`
 }
 
 func (s BlogPost) String() string {
-    return fmt.Sprintf("BlogPost<%d %s %s>", s.Id, s.Title, s.Author)
-}
-
-func Hello(name string) string {
-   return "hello " + name
-}
-
-func DB_Model() {
-    dbpass := os.Getenv("PASSWORD")
-    db := pg.Connect(&pg.Options{
-        Addr:     ":5432",
-        User: "postgres",
-        Password: dbpass,
-        Database: "backend",
-    })
-    defer db.Close()
-    err := createSchema(db)
-    if err != nil {
-        panic(err)
-    }
+    return fmt.Sprintf("BlogPost<%d %s %s>", s.Id, s.Title)
 }
 
 // createSchema creates database schema for User and Story models.
-func createSchema(db *pg.DB) error {
+func CreateSchema(db *pg.DB) error {
     models := []interface{}{
         (*User)(nil),
         (*BlogPost)(nil),
