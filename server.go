@@ -8,7 +8,6 @@ import (
 	"server/graph/generated"
     database	"server/db"
 
-    "github.com/go-chi/chi"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
     "github.com/go-pg/pg/v10"
@@ -31,12 +30,9 @@ func main() {
     defer db.Close()
     err := database.CreateSchema(db)
 	if err != nil {
-		panic(err)
+		log.Printf("cannot connect to db")
 	}
 
-    r := chi.NewRouter()
-
-    r.Route("/graphql", func(r chi.Router) {
         schema := generated.NewExecutableSchema(generated.Config{
             Resolvers: &graph.Resolver{
                 DB: db,
@@ -44,11 +40,10 @@ func main() {
         })
 	    srv := handler.NewDefaultServer(schema)
 
-		r.Handle("/graphiql", srv)
-    })
+	http.Handle("/graphql", srv)
 
     gqlPlayground := playground.Handler("GraphQL playground", "/graphql")
-	r.Get("/graphiql", gqlPlayground)
+	http.Handle("/graphiql", gqlPlayground)
 
 	log.Printf("connect to http://localhost:%s/graphiql for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
