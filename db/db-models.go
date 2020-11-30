@@ -35,6 +35,7 @@ func Hello(name string) string {
 
 func DB_Model() {
     dbpass := os.Getenv("PASSWORD")
+    fmt.Println(dbpass)
     db := pg.Connect(&pg.Options{
         Addr:     ":5432",
         User: "postgres",
