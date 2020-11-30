@@ -34,11 +34,11 @@ func Hello(name string) string {
 }
 
 func DB_Model() {
-    DB-Password := os.Getenv("PASSWORD"),
+    dbpass := os.Getenv("PASSWORD")
     db := pg.Connect(&pg.Options{
         Addr:     ":5432",
         User: "postgres",
-        Password: DB-Password,
+        Password: dbpass,
     })
     defer db.Close()
     err := createSchema(db)
