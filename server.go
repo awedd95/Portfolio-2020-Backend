@@ -30,7 +30,7 @@ func main() {
     defer db.Close()
     err := database.CreateSchema(db)
 	if err != nil {
-		log.Printf("cannot connect to db")
+		panic(err)
 	}
 
         schema := generated.NewExecutableSchema(generated.Config{
