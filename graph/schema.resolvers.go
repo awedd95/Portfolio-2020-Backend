@@ -37,6 +37,11 @@ func (r *queryResolver) Projects(ctx context.Context) ([]*model.Project, error) 
 }
 
 func (r *queryResolver) Posts(ctx context.Context) ([]*model.BlogPost, error) {
-	panic(fmt.Errorf("not implemented"))
+	var posts []*model.BlogPost
+    err := r.DB.Model(&posts).Select()
+     if err != nil {
+        panic(err)
+    }
+    return posts, nil
 }
 
