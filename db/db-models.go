@@ -7,17 +7,6 @@ import (
     "server/models"
 )
 
-type User struct {
-    ID     int64
-    Name   string
-    Password   string
-    Emails []string
-}
-
-func (u User) String() string {
-    return fmt.Sprintf("User<%d %s %v>", u.ID, u.Name, u.Emails)
-}
-
 type BlogPost struct {
     ID       int64
     Title    string
@@ -25,13 +14,14 @@ type BlogPost struct {
 }
 
 func (s BlogPost) String() string {
-    return fmt.Sprintf("BlogPost<%d %s %s>", s.ID, s.Title)
+    return fmt.Sprintf("BlogPost<%d %s >", s.ID, s.Title)
 }
 
 // createSchema creates database schema for User and Story models.
 func CreateSchema(db *pg.DB) error {
     models := []interface{}{
         (*models.User)(nil),
+        (*models.Project)(nil),
         (*BlogPost)(nil),
     }
 

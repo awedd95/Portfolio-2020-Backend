@@ -16,14 +16,20 @@ type BlogPost {
 
 type User {
   id: ID!
-  name: String!
+  first_name: String!
+  last_name: String!
   password: String!
   email: String!
+}
+
+type Token {
+  auth: String!
 }
 
 type Query {
   projects: [Project!]!
   posts: [BlogPost!]!
+  users: [User!]!
 }
 
 input NewProject {
@@ -37,7 +43,22 @@ input NewBlogPost {
   body: String!
 }
 
+input LoginUser {
+  email: String!
+  password: String!
+}
+
+input RegisterUser {
+  first_name: String!
+  last_name: String!
+  password: String!
+  email: String!
+
+}
+
 type Mutation {
   createProject(input: NewProject!): Project!
   createBlogPost(input: NewBlogPost!): BlogPost!
+  login(input: LoginUser!): Token!
+  register(input: RegisterUser!): Token!
 }

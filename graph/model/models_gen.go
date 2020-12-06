@@ -8,6 +8,11 @@ type BlogPost struct {
 	Body  string `json:"body"`
 }
 
+type LoginUser struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type NewBlogPost struct {
 	Title string `json:"title"`
 	Body  string `json:"body"`
@@ -26,9 +31,21 @@ type Project struct {
 	Description string `json:"description"`
 }
 
+type RegisterUser struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Password  string `json:"password"`
+	Email     string `json:"email"`
+}
+
+type Token struct {
+	Auth string `json:"auth"`
+}
+
 type User struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
+	ID        string `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Password  string `json:"password"`
+	Email     string `json:"email"`
 }
