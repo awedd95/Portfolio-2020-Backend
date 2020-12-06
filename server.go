@@ -55,8 +55,10 @@ func main() {
 		r.Handle("/", srv)
 	})
 
+    if( os.Getenv("STAGE") == "DEV"){
 	gqlPlayground := playground.Handler("api-gateway", "/graphql")
 	r.Get("/graphiql", gqlPlayground)
+    }
 	http.ListenAndServe(port, r)
 
 	log.Printf("connect to http://localhost%s/graphiql for GraphQL playground", port)
