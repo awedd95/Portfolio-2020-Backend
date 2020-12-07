@@ -6,6 +6,7 @@ package graph
 import (
 	"context"
 	"fmt"
+	"errors"
 	"server/auth"
 	"server/graph/model"
 
@@ -18,6 +19,8 @@ func (r *mutationResolver) CreateProject(ctx context.Context, input model.NewPro
 }
 
 func (r *mutationResolver) CreateBlogPost(ctx context.Context, input model.NewBlogPost) (*model.BlogPost, error) {
+    user := auth.ForContext(ctx); 
+    if user != nil{
 	blogPost := model.BlogPost{
 		Title: input.Title,
 		Body:  input.Body,
@@ -27,6 +30,10 @@ func (r *mutationResolver) CreateBlogPost(ctx context.Context, input model.NewBl
 		return nil, err
 	}
 	return &blogPost, nil
+} else {
+    err := errors.New( "you must be logged in to create a post")
+    return nil, err 
+    }
 }
 
 func (r *mutationResolver) Login(ctx context.Context, input model.LoginUser) (*model.Token, error) {

@@ -22,7 +22,7 @@ func CreateSchema(db *pg.DB) error {
     models := []interface{}{
         (*models.User)(nil),
         (*models.Project)(nil),
-        (*BlogPost)(nil),
+        (*models.BlogPost)(nil),
     }
 
     for _, model := range models {
