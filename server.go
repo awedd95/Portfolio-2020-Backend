@@ -35,7 +35,7 @@ func main() {
     defer db.Close()
     err := database.CreateSchema(db)
 	if err != nil {
-        log.Printf(dbpass)
+        log.Printf("Failed to login to db with password " + dbpass)
 		panic(err)
 	}
 
